@@ -228,7 +228,7 @@ def get_dataloader_stamps(config, split='train', single=False):
   loader_kwargs = dict(
     batch_size=config['training']['batch_size'],
     shuffle=True,
-    pin_memory=False,
+    pin_memory=True,
     sampler=None,
     drop_last=True
   )
@@ -241,7 +241,7 @@ def get_dataloader_stamps(config, split='train', single=False):
     loader_kwargs['num_workers'] = config['test']['nworkers']
 
   impath = config['data']['impath']
-  print(impath)
+
   dataset = StampsDataset(data_dirs, split, impath,transforms=transforms, nlabels=nlabels)
 
   return DataLoader(dataset, **loader_kwargs)
