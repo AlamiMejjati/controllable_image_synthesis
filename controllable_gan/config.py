@@ -209,6 +209,7 @@ def get_dataloader_stamps(config, split='train', single=False):
 
   if single:
     data_dirs = [d for d in data_dirs if int((d.split('/')[-1]).split('_')[0][-1]) == 1]
+    print(data_dirs)
 
   if split == 'train':
     nlabels = config['data']['nlabels']
@@ -240,6 +241,7 @@ def get_dataloader_stamps(config, split='train', single=False):
     loader_kwargs['num_workers'] = config['test']['nworkers']
 
   impath = config['data']['impath']
+  print(impath)
   dataset = StampsDataset(data_dirs, split, impath,transforms=transforms, nlabels=nlabels)
 
   return DataLoader(dataset, **loader_kwargs)

@@ -210,6 +210,8 @@ class StampsDataset(VisionDataset):
     filename = self.filenames[idx]
     label = self.labels[idx]
     mask = Image.open(filename)
+    print('mask:')
+    print(mask)
     mask = np.array(mask)
     if len(mask.shape)>2:
       mask = mask[:,:,-1]
@@ -217,7 +219,10 @@ class StampsDataset(VisionDataset):
     
     img = Image.open(os.path.join(self.impath,
                                   os.path.basename(filename)[:-4]+'_1.png'))
+
     img = np.array(img)
+    print('img:')
+    print(img)
     img = img[box[0]:box[2], box[1]:box[3],:]
     mask = mask[box[0]:box[2], box[1]:box[3]]/255.
     mask = mask[:,:,None]
