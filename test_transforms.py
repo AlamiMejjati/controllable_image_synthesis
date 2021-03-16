@@ -15,6 +15,7 @@ from controllable_gan.config import get_dataloader, get_out_dir, build_models
 from controllable_gan.transforms import ObjectTranslation, ObjectRotation
 from utils.io_utils import save_tensor_images
 
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 
 def save_imdict(im_dict, out_dir):
   for vis_attr_i in ('vis_img_rgb', 'vis_layers_alpha', 'vis_prim'):
@@ -157,13 +158,13 @@ if __name__ == '__main__':
   print('Sample camera rotations...')
 
   a_range = (0., 2.*math.pi)
-  polar = 0.25*math.pi
+  polar = 0.1*math.pi
 
   odir = os.path.join(out_dir, 'azimuth')
   os.makedirs(odir, exist_ok=True)
 
   transforms = [partial(lambda x, a, p: generator_test.module.camera.set_pose(azimuth=a, polar=p), a=a, p=p)
-                for a, p in zip(torch.linspace(*a_range, n_steps+1)[:-1], torch.ones(n_steps) * polar)]     # discard last step due to periodicity
+                for a, p in zip(torch.linspace(*a_range, n_steps), torch.ones(n_steps) * polar)]     # discard last step due to periodicity
 
   im_dict = evaluator.create_samples(ztest, transforms, obj_masks=obj_masks)
   save_imdict(im_dict, odir)

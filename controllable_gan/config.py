@@ -11,7 +11,7 @@ from .renderer import RendererQuadMesh, RendererPoint, \
                      RendererMesh
 from .primitives import PointCloud, Cuboid, Mesh
 from .transforms import ObjectRotation, ObjectTranslation
-from .datasets import ObjectDataset
+from .datasets import ObjectDataset, StampsDataset
 from .loss import SizeLoss, ConsistencyLoss
 
 primitive_dict = {'point': # point cloud
@@ -195,4 +195,50 @@ def get_dataloader(config, split='train', single=False):
   
   dataset = ObjectDataset(data_dirs, split, transforms=transforms, nlabels=nlabels)
   
+  return DataLoader(dataset, **loader_kwargs)
+
+
+def get_dataloader_stamps(config, split='train', single=False):
+  """Return data loader"""
+  root_dir = config['data']['root_dir']
+  sub_dirs = config['data']['sub_dirs']
+  data_dirs = [os.path.join(root_dir, sub_dir) for sub_dir in sub_dirs]
+
+  if not all([os.path.isdir(data_dir) for data_dir in data_dirs]):
+    raise ValueError('Incorrect data path!')
+
+  if single:
+    data_dirs = [d for d in data_dirs if int((d.split('/')[-1]).split('_')[0][-1]) == 1]
+
+  if split == 'train':
+    nlabels = config['data']['nlabels']
+  else:
+    nlabels = 1
+
+  imsize = config['data']['img_size']
+
+  transforms = torchvision.transforms.Compose([
+    torchvision.transforms.Resize((imsize, imsize)),
+    torchvision.transforms.ToTensor(),
+    torchvision.transforms.Lambda(lambda x: x + 1. / 128 * torch.rand(x.size())),
+    lambda x: x * 2 - 1
+  ])
+
+  loader_kwargs = dict(
+    batch_size=config['training']['batch_size'],
+    shuffle=True,
+    pin_memory=False,
+    sampler=None,
+    drop_last=True
+  )
+  if nlabels > 1:
+    loader_kwargs['batch_size'] *= 2  # compensate for pure background images
+
+  if split == 'train':
+    loader_kwargs['num_workers'] = config['training']['nworkers']
+  else:
+    loader_kwargs['num_workers'] = config['test']['nworkers']
+
+  dataset = StampsDataset(data_dirs, split, transforms=transforms, nlabels=nlabels)
+
   return DataLoader(dataset, **loader_kwargs)

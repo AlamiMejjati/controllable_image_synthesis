@@ -241,8 +241,10 @@ class Generator(nn.Module):
     if self.bg_cube:
       rgb_bg = x['img_bg'][:, :3] / 2 + 0.5
     else:         # use constant value
-      rgb_bg = self.bg_color * torch.ones(bs, 3, *self.imsize).type_as(rgb)
+      # rgb_bg = self.bg_color * torch.ones(bs, 3, *self.imsize).type_as(rgb)
+      rgb_bg = self.bg_color * torch.zeros(bs, 3, *self.imsize).type_as(rgb) #you added this youssfe
 
+    # rgb_bg = rgb_bg*0.
     # fuse RGB
     prim_depth = x['prim'][:, -1:] / 2 + 0.5      # use primitive depth for ordering objects
     rgb_fuse, rgb_fg = self.alpha_composition(rgb_masked, rgb_bg, alpha_masked, prim_depth)

@@ -1,0 +1,10 @@
+data:
+  name: pegasus_bg
+  sub_dirs: ['pegasus1_bg0']
+  nlabels: 1
+generator:
+  render_type: point
+  bg_cube: True
+training:
+  batch_size: 16
+  out_dir: results/pegasus

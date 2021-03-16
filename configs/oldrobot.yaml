@@ -1,0 +1,10 @@
+data:
+  name: oldrobot_bg
+  sub_dirs: ['oldrobot1_bg0']
+  nlabels: 1
+generator:
+  render_type: point
+  bg_cube: True
+training:
+  batch_size: 16
+  out_dir: results/oldrobot

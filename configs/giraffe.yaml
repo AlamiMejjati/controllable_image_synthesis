@@ -1,0 +1,11 @@
+data:
+  name: synthgiraffe_bg0
+  sub_dirs: ['synthgiraffe1_bg0']
+  nlabels: 1
+  img_size: 64
+generator:
+  render_type: point
+  bg_cube: False
+training:
+  batch_size: 16
+  out_dir: results/synthgiraffe
