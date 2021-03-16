@@ -14,7 +14,7 @@ from gan_training.config import (
 )
 from controllable_gan.config import get_dataloader_stamps, get_out_dir, build_models, build_optimizers, build_g_losses, save_config
 
-os.environ["CUDA_VISIBLE_DEVICES"] = '3'
+# os.environ["CUDA_VISIBLE_DEVICES"] = '3'
 torch.manual_seed(0)
 
 
@@ -105,7 +105,9 @@ if __name__ == '__main__':
   print('plop7')
   # Save for tests
   x_real, _ = next(iter(train_loader))
+  print('plop71')
   ztest = zdist.sample((batch_size,))
+  print('plop72')
 
   print('plop8')
   # Test generator
