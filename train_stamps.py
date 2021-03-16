@@ -14,7 +14,7 @@ from gan_training.config import (
 )
 from controllable_gan.config import get_dataloader_stamps, get_out_dir, build_models, build_optimizers, build_g_losses, save_config
 
-os.environ["CUDA_VISIBLE_DEVICES"] = '2'
+os.environ["CUDA_VISIBLE_DEVICES"] = '3'
 torch.manual_seed(0)
 
 
@@ -65,19 +65,20 @@ if __name__ == '__main__':
   generator, discriminator = build_models(config)
   print(generator)
   print(discriminator)
-  
+
+  print('plop0')
   # Put models on gpu if needed
   generator = generator.to(device)
   discriminator = discriminator.to(device)
-  
+  print('plop1')
   g_optimizer, d_optimizer = build_optimizers(
     generator, discriminator, config
   )
-  
+  print('plop2')
   # Use multiple GPUs if possible
   generator = nn.DataParallel(generator)
   discriminator = nn.DataParallel(discriminator)
-  
+  print('plop3')
   # Register modules to checkpoint
   checkpoint_io.register_modules(
     generator=generator,
@@ -85,10 +86,10 @@ if __name__ == '__main__':
     g_optimizer=g_optimizer,
     d_optimizer=d_optimizer,
   )
-  
+  print('plop4')
   # Get model file
   model_file = config['training']['model_file']
-  
+  print('plop5')
   # Logger
   logger = Logger(
     log_dir=path.join(out_dir, 'logs'),
@@ -96,23 +97,26 @@ if __name__ == '__main__':
     monitoring=config['training']['monitoring'],
     monitoring_dir=path.join(out_dir, 'monitoring')
   )
-  
+  print('plop6')
   # Distributions
   ydist = get_ydist(nlabels, device=device)
   zdist = get_zdist('gauss', config['z_dist']['dim'],
                     device=device)
-  
+  print('plop7')
   # Save for tests
   x_real, _ = next(iter(train_loader))
   ztest = zdist.sample((batch_size,))
-  
+
+  print('plop8')
   # Test generator
   generator_test = generator
-  
+
+  print('plop9')
   # Evaluator
   evaluator = Evaluator(generator_test, zdist, batch_size=config['test']['batch_size'], device=device)
   evaluator_single = Evaluator(generator_test, zdist, batch_size=config['test']['batch_size'], device=device, single=True)
-  
+
+  print('plop10')
   # initialize fid evaluators
   if fid_every > 0:
     cache_file = os.path.join(out_dir, 'cache_train.npz')
@@ -122,7 +126,7 @@ if __name__ == '__main__':
     cache_file = os.path.join(out_dir, 'cache_train_single.npz')
     val_loader_single = get_dataloader_stamps(config, split='val', single=True)
     evaluator_single.inception_eval.initialize_target(val_loader_single, cache_file=cache_file)
-  
+  print('plop11')
   # Train
   tstart = t0 = time.time()
   fid_best = float('inf')
