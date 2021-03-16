@@ -227,7 +227,6 @@ class StampsDataset(VisionDataset):
     # img = np.stack([img]*3, axis=-1)
     img = Image.fromarray(img.astype(np.uint8))
     img = self.transform(img)
-    print('success')
     return img, label
 # utility functions
 def make_equal_label(filenames, labels):
