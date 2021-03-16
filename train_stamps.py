@@ -14,7 +14,7 @@ from gan_training.config import (
 )
 from controllable_gan.config import get_dataloader_stamps, get_out_dir, build_models, build_optimizers, build_g_losses, save_config
 
-os.environ["CUDA_VISIBLE_DEVICES"] = '0'
+os.environ["CUDA_VISIBLE_DEVICES"] = '2'
 torch.manual_seed(0)
 
 

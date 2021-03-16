@@ -92,12 +92,13 @@ class StampsDataset(VisionDataset):
                     root/split/scene/bboxes.npz
   """
 
-  def __init__(self, data_dirs, split, transforms=None, nlabels=1):
+  def __init__(self, data_dirs, split, impath, transforms=None, nlabels=1):
     # Use multiple root folders
     if not isinstance(data_dirs, list):
       data_dirs = [data_dirs]
 
-    self.impath = '/home/youssef/Documents/phdYoop/datasets/manuel/beauty/PNG'
+    # self.impath = '/home/youssef/Documents/phdYoop/datasets/manuel/beauty/PNG'
+    self.impath = impath
     # assign label for each root folder
     self.nlabels = nlabels
     if self.nlabels not in [1, 2]:

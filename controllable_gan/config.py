@@ -239,6 +239,7 @@ def get_dataloader_stamps(config, split='train', single=False):
   else:
     loader_kwargs['num_workers'] = config['test']['nworkers']
 
-  dataset = StampsDataset(data_dirs, split, transforms=transforms, nlabels=nlabels)
+  impath = config['data']['impath']
+  dataset = StampsDataset(data_dirs, split, impath,transforms=transforms, nlabels=nlabels)
 
   return DataLoader(dataset, **loader_kwargs)

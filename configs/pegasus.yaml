@@ -2,9 +2,10 @@ data:
   name: pegasus_bg
   sub_dirs: ['pegasus1_bg0']
   nlabels: 1
+  impath: '/home/youssef/Documents/phdYoop/datasets/pegasus/beauty/PNG'
 generator:
   render_type: point
-  bg_cube: True
+  bg_cube: False
 training:
   batch_size: 16
   out_dir: results/pegasus

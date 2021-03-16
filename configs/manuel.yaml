@@ -2,6 +2,7 @@ data:
   name: manuel_bg
   sub_dirs: ['manuel1_bg0']
   nlabels: 1
+  impath: '/home/youssef/Documents/phdYoop/datasets/manuel/beauty/PNG'
 generator:
   render_type: point
   bg_cube: False

@@ -2,8 +2,10 @@ data:
   name: maple_bg
   sub_dirs: ['maple1_bg0']
   nlabels: 1
+  impath: '/home/youssef/Documents/phdYoop/datasets/maple/beauty/PNG'
 generator:
   render_type: point
-  bg_cube: True
+  bg_cube: False
 training:
+  batch_size: 16
   out_dir: results/maple
