@@ -228,7 +228,7 @@ def get_dataloader_stamps(config, split='train', single=False):
   loader_kwargs = dict(
     batch_size=config['training']['batch_size'],
     shuffle=True,
-    pin_memory=True,
+    pin_memory=False,
     sampler=None,
     drop_last=True
   )

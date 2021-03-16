@@ -104,8 +104,10 @@ if __name__ == '__main__':
                     device=device)
   print('plop7')
   # Save for tests
-  # x_real, _ = next(iter(train_loader))
+  itrainloader = iter(train_loader)
   print('plop71')
+  x_real, _ = next(itrainloader)
+
   ztest = zdist.sample((batch_size,))
   print('plop72')
 
